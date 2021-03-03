@@ -11,6 +11,7 @@ import com.yedam.emp.service.DeptService;
 
 @Controller
 public class DeptController {
+	
 	@Autowired
 	DeptService deptService;
 

@@ -16,14 +16,21 @@
 		</where>
 		ORDER BY DEPARTMENT_ID
 	</select>
+
 	<select id="getDept" parameterType="dept" resultType="dept">
-		SELECT
-		d.DEPARTMENT_NAME,
-		l.CITY,
+	SELECT 
+		d.DEPARTMENT_ID, 
+		d.DEPARTMENT_NAME, 
+		d.MANAGER_ID, 
+		l.CITY, 
 		e.LAST_NAME
-		FROM DEPARTMENTS d, LOCATIONS l, EMPLOYEES e
-		WHERE DEPARTMENT_ID = #{department_id} 
-		AND e.DEPARTMENT_ID = d.DEPARTMENT_ID
-		AND l.LOCATION_ID = d.LOCATION_ID
+	FROM 
+		LOCATIONS l, 
+		departments d, 
+		EMPLOYEES e 
+	WHERE d.DEPARTMENT_ID = #{department_id}
+	AND d.MANAGER_ID = e.MANAGER_ID
+	AND l.LOCATION_ID = d.LOCATION_ID
 	</select>
+
 </mapper>
