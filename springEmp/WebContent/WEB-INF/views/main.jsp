@@ -9,5 +9,6 @@
 <body>
 	<!-- <img src="./resources/images/Hydrangeas.jpg"> -->
 	<a href="getSearchEmp">사원조회</a>
+	<a href="getSearchDept">부서조회</a>
 </body>
 </html>

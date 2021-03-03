@@ -16,28 +16,25 @@ public class EmpMybatisDAO {
 
 	// 등록
 	public int insertEmp(EmpVO vo) {
-		int result = 0;
-		return result;
+		return sqlSession.insert("EmpDAO.insertEmp",vo);
 	}
 
 	// 수정
 	public int updateEmp(EmpVO vo) {
-		int result = 0;
-		return result;
+		return sqlSession.update("EmpDAO.updateEmp",vo);
 	}
 
 	// 삭제
 	public int deleteEmp(EmpVO vo) {
-		int result = 0;
-		return result;
+		return sqlSession.delete("EmpDAO.deleteEmp",vo);
 	}
 
 	// 단건조회
 	public EmpVO getEmp(EmpVO vo) {
-		return vo;
+		return sqlSession.selectOne("EmpDAO.getEmp",vo);
 	}
 
-	// 삭제
+	// 전체 or 검색 조회
 	public List<EmpVO> getSearchEmp(EmpVO vo) {
 		System.out.println("mybatis list");
 		return sqlSession.selectList("EmpDAO.getSearchEmp", vo);

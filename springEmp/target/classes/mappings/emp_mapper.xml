@@ -1,37 +1,87 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="EmpDAO">
-	<insert id="insertEmp" parameterType="com.yedam.emp.EmpVO">
+<mapper namespace="com.yedam.emp.service.impl.EmpMapper">
+	<insert id="insertEmp" parameterType="emp">
 		INSERT INTO EMPLOYEES
-			(EMPLOYEE_ID,
-			LAST_NAME,
-			EMAIL,
-			HIRE_DATE,
-			JOB_ID,
-			DEPARTMENT_ID)
-		VALUES(#{employee_id},
-			#{last_name},
-			#{email},
-			#{hire_date},
-			#{job_id},
-			#{department_id})
-	</insert>
-	<select id="getSearchEmp" parameterType="com.yedam.emp.EmpVO"
-		resultType="com.yedam.emp.EmpVO">
-		SELECT 
-			EMPLOYEE_ID,
+		(EMPLOYEE_ID,
+		<if test="first_name != null">
 			FIRST_NAME,
-			LAST_NAME,
-			EMAIL,
-			PHONE_NUMBER,
-			HIRE_DATE,
-			JOB_ID,
-			SALARY,
-			COMMISSION_PCT,
-			MANAGER_ID,
-			DEPARTMENT_ID 
-		FROM EMPLOYEES 
-		ORDER BY EMPLOYEE_ID
+		</if>
+		LAST_NAME,
+		EMAIL,
+		HIRE_DATE,
+		JOB_ID
+		<if test="manager_id != null">
+			,MANAGER_ID
+		</if>
+		<if test="department_id != null">
+			,DEPARTMENT_ID
+		</if>
+		)
+		VALUES(
+		#{employee_id},
+		<if test="first_name != null">
+			#{first_name},
+		</if>
+		#{last_name},
+		#{email},
+		#{hire_date},
+		#{job_id}
+		<if test="manager_id != null">
+			,#{manager_id}
+		</if>
+		<if test="department_id != null">
+			,#{department_id}
+		</if>
+		)
+	</insert>
+	<update id="updateEmp" parameterType="emp">
+		UPDATE EMPLOYEES
+		<set>
+			<if test="last_name != null">LAST_NAME = #{last_name},</if>
+			<if test="email!= null">EMAIL = #{email},</if>
+			<if test="job_id != null">JOB_ID = #{job_id},</if>
+			<if test="manager_id != null">MANAGER_ID = #{manager_id}</if>
+			<if test="department_id != null">DEPARTMENT_ID = #{department_id}</if>
+		</set>
+		WHERE EMPLOYEE_ID = #{employee_id}
+	</update>
+	<delete id="deleteEmp" parameterType="emp">
+		DELETE FROM EMPLOYEES
+		WHERE
+		EMPLOYEE_ID = #{employee_id}
+	</delete>
+	<select id="getEmp" parameterType="emp" resultType="emp">
+		SELECT * FROM
+		EMPLOYEES
+		WHERE
+		EMPLOYEE_ID = #{employee_id}
+	</select>
+
+	<select id="getSearchEmp" parameterType="emp" resultType="emp">
+		SELECT
+		e.employee_id,
+		e.last_name,
+		e.email,
+		e.salary,
+		d.department_id,
+		d.department_name,
+		j.job_title
+		FROM EMPLOYEES e,DEPARTMENTS d, jobs j 
+		WHERE e.department_id= d.department_id
+   		AND (e.job_id = j.job_id)
+		<where>
+			<if test="department_id !=null and department_id != ''">
+				DEPARTMENT_ID = #{department_id}
+			</if>
+			<if test="job_id != null and job_id != ''">
+				AND JOB_ID = #{job_id}
+			</if>
+			<if test="first_name != null and first_name != ''">
+				AND upper(FIRST_NAME) LIKE '%' || upper(#{first_name}) ||
+				'%'
+			</if>
+		</where>
 	</select>
 </mapper>

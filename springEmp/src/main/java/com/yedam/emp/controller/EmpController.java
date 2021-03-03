@@ -59,13 +59,13 @@ public class EmpController {
 	@GetMapping("/getEmp")
 	public String getEmp(EmpVO vo, Model model) {
 		model.addAttribute("emp", empService.getEmp(vo));
-		return "/emp/getEmp";
+		return "emp/getEmp";
 	}
 
 	// 검색조회
 	@GetMapping("/getSearchEmp")
 	public String getSearchEmp(EmpVO vo, Model model) {
 		model.addAttribute("list", empService.getSearchEmp(vo));
-		return "/emp/getSearchEmp";
+		return "emp/getSearchEmp";
 	}
 }// end of class

@@ -6,15 +6,16 @@
 	<!-- datasource -->
 	<bean id="dataSource"
 		class="org.apache.tomcat.jdbc.pool.DataSource">
-		<property name="driverClassName" value="oracle.jdbc.OracleDriver"></property>
-		<property name="url" value="jdbc:oracle:thin:@127.0.0.1:1521:xe"></property>
+		<property name="driverClassName"
+			value="oracle.jdbc.OracleDriver"></property>
+		<property name="url"
+			value="jdbc:oracle:thin:@127.0.0.1:1521:xe"></property>
 		<property name="username" value="hr"></property>
 		<property name="password" value="hr"></property>
 	</bean>
 	<!-- jdbcTemplate -->
-	<bean id="jdbcTemplate" class="org.springframework.jdbc.core.JdbcTemplate">
+	<bean id="jdbcTemplate"
+		class="org.springframework.jdbc.core.JdbcTemplate">
 		<property name="dataSource" ref="dataSource"></property>
 	</bean>
-	
-	
 </beans>

@@ -52,13 +52,13 @@ public class DeptController {
 	@GetMapping("/getDept")
 	public String getDept(DeptVO deptvo, Model model) {
 		model.addAttribute("dept", deptService.getDept(deptvo));
-		return "/dept/getDept";
+		return "dept/getDept";
 	}
 
 	// 전체 or 검색 조회
 	@GetMapping("/getSearchDept")
 	public String getSearchDept(DeptVO deptvo, Model model) {
 		model.addAttribute("deptList", deptService.getSearchDept(deptvo));
-		return "/dept/getSearchDept";
+		return "dept/getSearchDept";
 	}
 }// end of class
