@@ -19,8 +19,10 @@
 </head>
 <body>
 	<div>
-		사번:${emp.employee_id}<br> 이름:${emp.first_name} ${emp.last_name}<br>
-		이메일:${emp.email}<br> 급여:${emp.salary}<br>
+		사번:${emp.employee_id}<br>
+		이름:${emp.first_name} ${emp.last_name}<br>
+		이메일:${emp.email}<br>
+		급여:${emp.salary}<br>
 		부서:${emp.department_id}<br>
 	</div>
 	<button id="btnUpd">수정</button>

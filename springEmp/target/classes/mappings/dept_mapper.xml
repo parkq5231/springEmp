@@ -6,6 +6,24 @@
 		resultType="dept">
 		SELECT *
 		FROM DEPARTMENTS
+		<where>
+			<if test="department_name != null and department_name != ''">
+				DEPARTMENT_NAME = #{department_name}
+			</if>
+			<if test="manager_id != null and manager_id !=''">
+				AND MANAGER_ID = #{manager_id}
+			</if>
+		</where>
 		ORDER BY DEPARTMENT_ID
+	</select>
+	<select id="getDept" parameterType="dept" resultType="dept">
+		SELECT
+		d.DEPARTMENT_NAME,
+		l.CITY,
+		e.LAST_NAME
+		FROM DEPARTMENTS d, LOCATIONS l, EMPLOYEES e
+		WHERE DEPARTMENT_ID = #{department_id} 
+		AND e.DEPARTMENT_ID = d.DEPARTMENT_ID
+		AND l.LOCATION_ID = d.LOCATION_ID
 	</select>
 </mapper>

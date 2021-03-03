@@ -19,10 +19,13 @@
 </head>
 <body>
 	<div>
+		${dept}<br>
 		부서번호:${dept.department_id}<br>
 		부서이름:${dept.department_name}<br>
 		매니저:${dept.manager_id}<br>
-		지역번호:${dept.location_id}<br><br>
+		지역번호:${dept.location_id}<br>
+		도시:${dept.city}<br>
+		이름:${dept.last_name}<br>
 	</div>
 	<button id="btnUpd">수정</button>
 	<a href="deleteDept?department_id=${dept.department_id}">삭제</a>
