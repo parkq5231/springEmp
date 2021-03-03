@@ -92,8 +92,9 @@ public class EmpSpringDAO {
 			vo.setJob_id(rs.getString("job_id"));
 			vo.setSalary(rs.getString("salary"));
 			vo.setDepartment_id(rs.getString("department_id"));
+			vo.setManager_id(rs.getString("manager_id"));
+			vo.setPhone_number(rs.getString("phone_number"));
 			return vo;
 		}
-
-	}
-}
+	}//end of class
+}//end of class

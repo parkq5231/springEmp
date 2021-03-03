@@ -11,7 +11,7 @@
 	$(function() {
 		$("#btnUpd").on("click", function() {
 			//location.href="";
-			location.assign("updateEmp?employee_id=${emp.employee_id}");
+			location.assign("updateDept?department_id=${dept.department_id}");
 		})//end of btnUpd
 	});//end of function
 </script>
@@ -19,12 +19,13 @@
 </head>
 <body>
 	<div>
-		사번:${emp.employee_id}<br> 이름:${emp.first_name} ${emp.last_name}<br>
-		이메일:${emp.email}<br> 급여:${emp.salary}<br>
-		부서:${emp.department_id}<br>
+		부서번호:${dept.department_id}<br>
+		부서이름:${dept.department_name}<br>
+		매니저:${dept.manager_id}<br>
+		지역번호:${dept.location_id}<br><br>
 	</div>
 	<button id="btnUpd">수정</button>
-	<a href="deleteEmp?employee_id=${emp.employee_id}">삭제</a>
-	<a href="getSearchEmp">목록</a>
+	<a href="deleteDept?department_id=${dept.department_id}">삭제</a>
+	<a href="getSearchDept">목록</a>
 </body>
 </html>

@@ -12,26 +12,30 @@ import com.yedam.emp.service.EmpService;
 public class EmpServiceImpl implements EmpService {
 
 	@Autowired
-	EmpSpringDAO empStringDAO;
+	//EmpSpringDAO empStringDAO;
+	EmpMybatisDAO empStringDAO;
 
+	
+	
+	// CRUD 중 CUD는 void 타입도 상관없음
 	@Override
 	public int insertEmp(EmpVO vo) {
-		return 0;
+		return empStringDAO.insertEmp(vo);
 	}
 
 	@Override
 	public int updateEmp(EmpVO vo) {
-		return 0;
+		return empStringDAO.updateEmp(vo);
 	}
 
 	@Override
 	public int deleteEmp(EmpVO vo) {
-		return 0;
+		return empStringDAO.deleteEmp(vo);
 	}
 
 	@Override
 	public EmpVO getEmp(EmpVO vo) {
-		return null;
+		return empStringDAO.getEmp(vo);
 	}
 
 	@Override

@@ -12,49 +12,60 @@ import com.yedam.emp.service.EmpService;
 
 @Controller
 public class EmpController {
-	
-	@Autowired EmpService empService;
-	
-	@RequestMapping("/main")
+
+	@Autowired
+	EmpService empService;
+
+	@RequestMapping("/")
 	public String main() {
 		return "main";
 	}
 
-	// 등록
-	@GetMapping("/insertEmp") // insertPage
+	// 등록페이지
+	@GetMapping("/insertEmp")
 	public String insertEmp(EmpVO vo) {
-		return "emp/insertEmp";
+		return "/emp/insertEmp";
 	}
 
 	// 등록처리
 	@PostMapping("/insertEmp")
 	public String insertEmpProc(EmpVO vo) {
+		empService.insertEmp(vo);
 		return "redirect:/getSearchEmp";
 	}
 
-	// 수정
+	// 수정페이지
 	@GetMapping("/updateEmp")
-	public String updateEmp(EmpVO vo) {
-		return "emp/updateEmp";
+	public String updateEmp(EmpVO vo, Model model) {
+		model.addAttribute("empVO", empService.getEmp(vo));
+		return "/emp/updateEmp";
 	}
 
 	// 수정처리
 	@PostMapping("/updateEmp")
 	public String updateEmpProc(EmpVO vo) {
+		empService.updateEmp(vo);
 		return "redirect:/getSearchEmp";
 	}
-	// 단건조회
 
+	// 삭제
+	@GetMapping("/deleteEmp")
+	public String deleteEmp(EmpVO vo) {
+		empService.deleteEmp(vo);
+		return "redirect:/getSearchEmp";
+	}
+
+	// 단건조회
 	@GetMapping("/getEmp")
-	public String getEmp(EmpVO vo) {
+	public String getEmp(EmpVO vo, Model model) {
+		model.addAttribute("emp", empService.getEmp(vo));
 		return "/emp/getEmp";
 	}
-	// 검색조회
 
+	// 검색조회
 	@GetMapping("/getSearchEmp")
 	public String getSearchEmp(EmpVO vo, Model model) {
 		model.addAttribute("list", empService.getSearchEmp(vo));
 		return "/emp/getSearchEmp";
 	}
-
-}
+}// end of class
