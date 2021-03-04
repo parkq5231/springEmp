@@ -69,7 +69,7 @@
 	<select id="getSearchEmp" parameterType="empSearchVO"
 		resultType="emp">
 		select b.* from(select rownum rn, a.* from(
-		SELECT e.*, d.department_name, j.job_title
+		SELECT e.*, d.department_id, d.department_name, j.job_title
 		FROM EMPLOYEES e,DEPARTMENTS d,jobs j
 		WHERE e.department_id = d.department_id
 		AND (e.job_id = j.job_id)

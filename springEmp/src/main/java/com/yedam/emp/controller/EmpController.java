@@ -4,19 +4,28 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
+import com.yedam.emp.DeptSearchVO;
 import com.yedam.emp.EmpSearchVO;
 import com.yedam.emp.EmpVO;
+import com.yedam.emp.JobVO;
 import com.yedam.emp.common.Paging;
+import com.yedam.emp.service.DeptService;
 import com.yedam.emp.service.EmpService;
+import com.yedam.emp.service.JobService;
 
 @Controller
 public class EmpController {
 
 	@Autowired
 	EmpService empService;
+	@Autowired
+	DeptService deptService;
+	@Autowired
+	JobService jobService;
 
 	@RequestMapping("/")
 	public String main() {
@@ -25,7 +34,12 @@ public class EmpController {
 
 	// 등록페이지
 	@GetMapping("/insertEmp")
-	public String insertEmp(EmpVO vo) {
+	public String insertEmp(EmpVO vo, Model model, DeptSearchVO deptvo, JobVO jobvo) {// vo 를 사용하지 않아도 인수 써줘야함
+		deptvo.setStart(1);
+		deptvo.setEnd(1000);
+		
+		model.addAttribute("deptList", deptService.getSearchDept(deptvo));
+		model.addAttribute("jobList", jobService.getSearchJob(jobvo));
 		return "/emp/insertEmp";
 	}
 
@@ -38,8 +52,10 @@ public class EmpController {
 
 	// 수정페이지
 	@GetMapping("/updateEmp")
-	public String updateEmp(EmpVO vo, Model model) {
+	public String updateEmp(EmpVO vo, Model model, DeptSearchVO deptvo, JobVO jobvo) {
 		model.addAttribute("empVO", empService.getEmp(vo));
+		model.addAttribute("deptList", deptService.getSearchDept(deptvo));
+		model.addAttribute("jobList", jobService.getSearchJob(jobvo));
 		return "/emp/updateEmp";
 	}
 
@@ -58,8 +74,16 @@ public class EmpController {
 	}
 
 	// 단건조회
-	@GetMapping("/getEmp")
-	public String getEmp(EmpVO vo, Model model) {
+	@GetMapping("/getEmp") /// {employee_id}
+	public String getEmp(Model model, @ModelAttribute("employee") EmpVO vo) {
+		// ,@RequestParam(value = "id", required = true, defaultValue = "100") String
+		// employee_id
+		// ,@PathVariable String employee_id
+		// HttpServletRequest request
+
+		// 1.getParameter
+		// String employee_id = request.getParameter("employee_id");
+
 		model.addAttribute("emp", empService.getEmp(vo));
 		return "emp/getEmp";
 	}

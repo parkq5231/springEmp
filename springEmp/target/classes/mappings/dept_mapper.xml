@@ -16,8 +16,7 @@
 		</where>
 	</select>
 
-	<select id="getSearchDept" parameterType="deptSearchVO"
-		resultType="dept">
+	<select id="getSearchDept" parameterType="deptSearchVO" resultType="dept">
 		select b.* from(select rownum rn, a.* from(
 		SELECT d.*, e.last_name, l.city
 		FROM DEPARTMENTS d ,employees e, locations l
@@ -48,8 +47,7 @@
 		ON(l.LOCATION_ID = d.LOCATION_ID)
 		FULL OUTER JOIN EMPLOYEES e
 		ON(d.MANAGER_ID = e.MANAGER_ID)
-		WHERE d.DEPARTMENT_ID =
-		#{department_id}
+		WHERE d.DEPARTMENT_ID =	#{department_id}
 	</select>
 
 </mapper>

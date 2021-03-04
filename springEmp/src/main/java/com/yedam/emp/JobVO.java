@@ -8,4 +8,6 @@ public class JobVO {
 	private String job_title;
 	private int min_salary;
 	private int max_salary;
+	private Integer start = 1;
+	private Integer end = 10;
 }
