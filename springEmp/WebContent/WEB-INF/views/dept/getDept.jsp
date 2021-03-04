@@ -19,7 +19,6 @@
 </head>
 <body>
 	<div>
-		${dept}<br>
 		부서번호:${dept.department_id}<br>
 		부서이름:${dept.department_name}<br>
 		매니저:${dept.manager_id}<br>

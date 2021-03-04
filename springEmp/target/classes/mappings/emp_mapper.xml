@@ -2,39 +2,46 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.yedam.emp.service.impl.EmpMapper">
+	<!-- 레코드건수 -->
+	<select id="getCount" resultType="int">
+		SELECT COUNT(*)
+		FROM EMPLOYEES
+		<where>
+			<if test="department_id !=null and department_id != ''">
+				DEPARTMENT_ID = #{department_id}
+			</if>
+			<if test="job_id != null and job_id != ''">
+				AND JOB_ID = #{job_id}
+			</if>
+			<if test="first_name != null and first_name != ''">
+				AND upper(FIRST_NAME) LIKE '%' || upper(#{first_name}) || '%'
+			</if>
+		</where>
+	</select>
+
 	<insert id="insertEmp" parameterType="emp">
 		INSERT INTO EMPLOYEES
 		(EMPLOYEE_ID,
-		<if test="first_name != null">
-			FIRST_NAME,
-		</if>
+		FIRST_NAME,
 		LAST_NAME,
 		EMAIL,
 		HIRE_DATE,
-		JOB_ID
-		<if test="manager_id != null">
-			,MANAGER_ID
+		JOB_ID,
+		<if test="manager_id != null and manager_id != ''">
+			MANAGER_ID,
 		</if>
-		<if test="department_id != null">
-			,DEPARTMENT_ID
-		</if>
-		)
-		VALUES(
+		DEPARTMENT_ID)
+		VALUES (
 		#{employee_id},
-		<if test="first_name != null">
-			#{first_name},
-		</if>
+		#{first_name},
 		#{last_name},
 		#{email},
 		#{hire_date},
-		#{job_id}
-		<if test="manager_id != null">
-			,#{manager_id}
+		#{job_id},
+		<if test="manager_id != null and manager_id != ''">
+			#{manager_id},
 		</if>
-		<if test="department_id != null">
-			,#{department_id}
-		</if>
-		)
+		#{department_id})
 	</insert>
 	<update id="updateEmp" parameterType="emp">
 		UPDATE EMPLOYEES
@@ -59,29 +66,24 @@
 		EMPLOYEE_ID = #{employee_id}
 	</select>
 
-	<select id="getSearchEmp" parameterType="emp" resultType="emp">
-		SELECT
-		e.employee_id,
-		e.last_name,
-		e.email,
-		e.salary,
-		d.department_id,
-		d.department_name,
-		j.job_title
-		FROM EMPLOYEES e,DEPARTMENTS d, jobs j 
-		WHERE e.department_id= d.department_id
-   		AND (e.job_id = j.job_id)
-		<where>
+	<select id="getSearchEmp" parameterType="empSearchVO"
+		resultType="emp">
+		select b.* from(select rownum rn, a.* from(
+		SELECT e.*, d.department_name, j.job_title
+		FROM EMPLOYEES e,DEPARTMENTS d,jobs j
+		WHERE e.department_id = d.department_id
+		AND (e.job_id = j.job_id)
 			<if test="department_id !=null and department_id != ''">
-				DEPARTMENT_ID = #{department_id}
+				AND	d.DEPARTMENT_ID = #{department_id}
 			</if>
 			<if test="job_id != null and job_id != ''">
-				AND JOB_ID = #{job_id}
+				AND e.JOB_ID = #{job_id}
 			</if>
 			<if test="first_name != null and first_name != ''">
 				AND upper(FIRST_NAME) LIKE '%' || upper(#{first_name}) ||
 				'%'
 			</if>
-		</where>
+		ORDER BY e.EMPLOYEE_ID
+		) a) b where rn between #{start} and #{end}
 	</select>
 </mapper>

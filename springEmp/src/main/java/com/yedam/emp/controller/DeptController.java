@@ -6,12 +6,14 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 
+import com.yedam.emp.DeptSearchVO;
 import com.yedam.emp.DeptVO;
+import com.yedam.emp.common.Paging;
 import com.yedam.emp.service.DeptService;
 
 @Controller
 public class DeptController {
-	
+
 	@Autowired
 	DeptService deptService;
 
@@ -58,7 +60,18 @@ public class DeptController {
 
 	// 전체 or 검색 조회
 	@GetMapping("/getSearchDept")
-	public String getSearchDept(DeptVO deptvo, Model model) {
+	public String getSearchDept(DeptSearchVO deptvo, Paging paging, Model model) {
+
+		paging.setPageUnit(5);// 1 페이지 안에서 보이는 갯수
+		paging.setPageSize(3);// 페이지 갯수가 3개라는 의미
+		// paging
+		if (paging.getPage() == null)
+			paging.setPage(1);
+		deptvo.setStart(paging.getFirst());
+		deptvo.setEnd(paging.getLast());
+		paging.setTotalRecord(deptService.getCount(deptvo));
+
+		model.addAttribute("paging", paging);
 		model.addAttribute("deptList", deptService.getSearchDept(deptvo));
 		return "dept/getSearchDept";
 	}

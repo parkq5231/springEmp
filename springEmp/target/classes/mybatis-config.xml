@@ -16,6 +16,7 @@
 	<typeAliases>
 		<typeAlias type="com.yedam.emp.EmpVO" alias="emp" />
 		<typeAlias type="com.yedam.emp.DeptVO" alias="dept" />
+		<package name="com.yedam.emp" />
 	</typeAliases>
 
 </configuration>

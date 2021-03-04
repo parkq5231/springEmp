@@ -2,10 +2,10 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.yedam.emp.service.impl.DeptMapper">
-	<select id="getSearchDept" parameterType="dept"
-		resultType="dept">
-		SELECT *
-		FROM DEPARTMENTS
+	<!-- 레코드 건수 -->
+	<select id="getCount" resultType="int">
+		SELECT COUNT(*)
+		FROM EMPLOYEES
 		<where>
 			<if test="department_name != null and department_name != ''">
 				DEPARTMENT_NAME = #{department_name}
@@ -14,23 +14,42 @@
 				AND MANAGER_ID = #{manager_id}
 			</if>
 		</where>
-		ORDER BY DEPARTMENT_ID
+	</select>
+
+	<select id="getSearchDept" parameterType="deptSearchVO"
+		resultType="dept">
+		select b.* from(select rownum rn, a.* from(
+		SELECT d.*, e.last_name, l.city
+		FROM DEPARTMENTS d ,employees e, locations l
+		WHERE
+		e.department_id = d.department_id
+		AND d.location_id = l.location_id
+		<where>
+			<if test="department_name != null and department_name != ''">
+				AND d.DEPARTMENT_NAME = #{department_name}
+			</if>
+			<if test="city != null and city !=''">
+				AND l.city = #{city}
+			</if>
+			<if test="last_name != null and last_name != ''">
+				AND upper(e.last_name) LIKE '%' || upper(#{last_name}) ||
+				'%'
+			</if>
+		</where>
+		ORDER BY d.DEPARTMENT_ID
+		) a) b where rn between #{start} and #{end}
 	</select>
 
 	<select id="getDept" parameterType="dept" resultType="dept">
-	SELECT 
-		d.DEPARTMENT_ID, 
-		d.DEPARTMENT_NAME, 
-		d.MANAGER_ID, 
-		l.CITY, 
-		e.LAST_NAME
-	FROM 
-		LOCATIONS l, 
-		departments d, 
-		EMPLOYEES e 
-	WHERE d.DEPARTMENT_ID = #{department_id}
-	AND d.MANAGER_ID = e.MANAGER_ID
-	AND l.LOCATION_ID = d.LOCATION_ID
+		SELECT d.*,
+		l.CITY, e.LAST_NAME
+		FROM
+		LOCATIONS l FULL OUTER JOIN departments d
+		ON(l.LOCATION_ID = d.LOCATION_ID)
+		FULL OUTER JOIN EMPLOYEES e
+		ON(d.MANAGER_ID = e.MANAGER_ID)
+		WHERE d.DEPARTMENT_ID =
+		#{department_id}
 	</select>
 
 </mapper>

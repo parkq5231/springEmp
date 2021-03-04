@@ -7,7 +7,9 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
+import com.yedam.emp.EmpSearchVO;
 import com.yedam.emp.EmpVO;
+import com.yedam.emp.common.Paging;
 import com.yedam.emp.service.EmpService;
 
 @Controller
@@ -31,7 +33,7 @@ public class EmpController {
 	@PostMapping("/insertEmp")
 	public String insertEmpProc(EmpVO vo) {
 		empService.insertEmp(vo);
-		return "redirect:/getSearchEmp";
+		return "redirect:getSearchEmp";
 	}
 
 	// 수정페이지
@@ -64,7 +66,17 @@ public class EmpController {
 
 	// 검색조회
 	@GetMapping("/getSearchEmp")
-	public String getSearchEmp(EmpVO vo, Model model) {
+	public String getSearchEmp(EmpSearchVO vo, Paging paging, Model model) {
+		paging.setPageUnit(5);// page record view
+		paging.setPageSize(3);// page number
+		// paging
+		if (vo.getPage() == null)
+			vo.setPage(1);
+
+		vo.setStart(paging.getFirst());
+		vo.setEnd(paging.getLast());
+		paging.setTotalRecord(empService.getCount(vo));
+		model.addAttribute("paging", paging);
 		model.addAttribute("list", empService.getSearchEmp(vo));
 		return "emp/getSearchEmp";
 	}

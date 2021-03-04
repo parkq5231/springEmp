@@ -57,7 +57,7 @@
 </head>
 <body>
 <h3 id="top">사원등록</h3>
-<form action="updateEmp" method="post" name="frm">
+<form action="insertEmp" method="post" name="frm">
 	employee_id <input type="number" name="employee_id" value="${empVO.employee_id}"
 				<c:if test="${not empty empVO.employee_id}"> readonly="readonly"</c:if> ><br>
 	first_name  <input name="first_name" value="${empVO.first_name}"><br>

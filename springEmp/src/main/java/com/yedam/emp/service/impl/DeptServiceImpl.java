@@ -5,6 +5,7 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.yedam.emp.DeptSearchVO;
 import com.yedam.emp.DeptVO;
 import com.yedam.emp.service.DeptService;
 
@@ -12,7 +13,7 @@ import com.yedam.emp.service.DeptService;
 public class DeptServiceImpl implements DeptService {
 
 	@Autowired
-	//DeptSpringDAO deptpringDAO;
+	// DeptSpringDAO deptpringDAO;
 	DeptMapper deptpringDAO;
 
 	@Override
@@ -36,8 +37,13 @@ public class DeptServiceImpl implements DeptService {
 	}
 
 	@Override
-	public List<DeptVO> getSearchDept(DeptVO deptvo) {
+	public List<DeptVO> getSearchDept(DeptSearchVO deptvo) {
 		return deptpringDAO.getSearchDept(deptvo);
+	}
+
+	@Override
+	public int getCount(DeptSearchVO vo) {
+		return deptpringDAO.getCount(vo);
 	}
 
 }

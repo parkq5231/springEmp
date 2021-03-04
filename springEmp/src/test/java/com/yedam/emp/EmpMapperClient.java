@@ -12,6 +12,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
+import com.yedam.emp.service.EmpService;
 import com.yedam.emp.service.impl.EmpMapper;
 
 @RunWith(SpringJUnit4ClassRunner.class)
@@ -20,17 +21,21 @@ public class EmpMapperClient {
 
 	@Autowired
 	EmpMapper empMapper;
+	@Autowired
+	EmpService empService;
 
-	// @Test //insert
+	@Test // insert
 	public void insertEmp() {
 		EmpVO vo = EmpVO.builder()//
-				.employee_id("679")//
-				.last_name("679")//
-				.email("679@gmail.com")//
+				.employee_id("5018")//
+				.first_name("kimkim4")//
+				.last_name("abc4")//
+				.email("5018@")//
 				.hire_date(new java.sql.Date(new Date().getTime()))//
-				.job_id("ST_CLERK")//
+				.job_id("IT_PROG")//
+				.department_id("10")//
 				.build();
-		int result = empMapper.insertEmp(vo);
+		int result = empService.insertEmp(vo);
 		assertEquals(result, 1);
 	}
 
