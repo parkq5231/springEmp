@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.yedam.board.service.impl.CommentsMapper">
+	<insert id="insertComments" statementType="CALLABLE"
+		parameterType="CommentsVO">
+		{call comments_ins(
+		#{content},
+		#{name},
+		#{board_id},
+		#{id,
+		mode=OUT, jdbcType=NUMERIC, javaType=java.lang.String},
+		#{out_msg,
+		mode=OUT, jdbcType=VARCHAR, javaType=java.lang.String})
+		}
+	</insert>
+	<delete id="deleteComments" parameterType="CommentsVO">
+		DELETE FROM COMMENTS
+		WHERE ID IN
+		<foreach collection="ids" item="item" open="(" close=")"
+			separator=",">
+			#{item}
+		</foreach>
+	</delete>
+	<select id="getComments" parameterType="CommentsVO" resultType="CommentsVO">
+		SELECT
+			ID,
+			NAME,
+			COMMENT,
+			BOARD_ID
+		FROM COMMENTS
+		WHERE ID = #{id}
+	</select>
+	<select id="getSearchComments" parameterType="CommentsVO" resultType="CommentsVO">
+		SELECT
+			ID,
+			NAME,
+			COMMENT,
+			BOARD_ID
+		FROM COMMENTS
+		WHERE BOARD_ID = #{board_id}
+	</select>
+	
+</mapper>

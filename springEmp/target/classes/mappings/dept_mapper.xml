@@ -18,12 +18,13 @@
 
 	<select id="getSearchDept" parameterType="deptSearchVO" resultType="dept">
 		select b.* from(select rownum rn, a.* from(
-		SELECT d.*, e.last_name, l.city
+		
+		SELECT d.department_id, d.department_name,d.manager_id,d.location_id, e.last_name, l.city
 		FROM DEPARTMENTS d ,employees e, locations l
-		WHERE
+		
+		<where>
 		e.department_id = d.department_id
 		AND d.location_id = l.location_id
-		<where>
 			<if test="department_name != null and department_name != ''">
 				AND d.DEPARTMENT_NAME = #{department_name}
 			</if>
