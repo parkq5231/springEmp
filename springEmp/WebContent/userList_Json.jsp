@@ -8,7 +8,7 @@
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
-<script src="./resources/json.min.js"></script>
+<script src="./resources/js/json.min.js"></script>
 <script type="text/javascript" >
 	$(function(){
 		userList();
@@ -70,13 +70,21 @@
 	function userInsert(){
 		//등록 버튼 클릭
 		$('#btnInsert').on('click',function(){
+			/* var param = {id : $("[name=id]").val(),
+						 name : $("[name=name]").val() ,
+						 password : $("[name=password]").val(),
+						 role : $("[name=role]").val() }; */
+						 
  			$.ajax({
 			 	url : "user",
-			 	data : ,
-			 	dataType : "json",
-			 	
-			 	
- 			});
+			 	method : "post",
+			 	data : JSON.stringify($("#form1").serializeObject()),
+			 	contentType : "application/json",		//보낼 데이터 json(json -> @RequestBody)
+			 	dataType : "json",						//응답 결과가 json(JSON.parse()와 같음)
+			 	success : function(response){
+			 		console.table(response);
+			 	}
+ 			});//end of ajax
 		});//등록 버튼 클릭
 	}//userInsert
 	

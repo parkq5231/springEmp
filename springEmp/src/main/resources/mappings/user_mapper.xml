@@ -4,9 +4,9 @@
 <mapper namespace="com.yedam.emp.service.impl.UserMapper">
 	<insert id="insertUser" parameterType="UserVO">
 		INSERT INTO USERS
-		(ID,PASSWORD,NAME)   
+		(ID,PASSWORD,NAME,ROLE)   
 		VALUES(
-		#{id},#{password},#{name}
+		#{id},#{password},#{name},#{role}
 		)
 	</insert>
 	<delete id="deleteUser" parameterType="UserVO">
