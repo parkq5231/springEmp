@@ -16,29 +16,44 @@
 	</insert>
 	<delete id="deleteComments" parameterType="CommentsVO">
 		DELETE FROM COMMENTS
-		WHERE ID IN
-		<foreach collection="ids" item="item" open="(" close=")"
-			separator=",">
-			#{item}
-		</foreach>
+		WHERE
+		<choose>
+			<when test="ids != null and ids.length >0">
+				ID IN
+				<foreach collection="ids" item="item" open="(" close=")"
+					separator=",">
+					#{item}
+				</foreach>
+			</when>
+			<otherwise>
+				ID= #{id}
+			</otherwise>
+		</choose>
 	</delete>
-	<select id="getComments" parameterType="CommentsVO" resultType="CommentsVO">
-		SELECT
-			ID,
-			NAME,
-			COMMENT,
-			BOARD_ID
-		FROM COMMENTS
-		WHERE ID = #{id}
-	</select>
-	<select id="getSearchComments" parameterType="CommentsVO" resultType="CommentsVO">
-		SELECT
-			ID,
-			NAME,
-			COMMENT,
-			BOARD_ID
-		FROM COMMENTS
-		WHERE BOARD_ID = #{board_id}
-	</select>
 	
+	<select id="getComments" parameterType="CommentsVO"
+		resultType="CommentsVO">
+		SELECT
+		ID,
+		NAME,
+		CONTENT,
+		BOARD_ID,
+		WDATE
+		FROM COMMENTS
+		WHERE ID =
+		#{id}
+	</select>
+	<select id="getSearchComments" parameterType="CommentsVO"
+		resultType="CommentsVO">
+		SELECT
+		ID,
+		NAME,
+		CONTENT,
+		BOARD_ID,
+		WDATE
+		FROM COMMENTS
+		WHERE
+		BOARD_ID = #{board_id}
+	</select>
+
 </mapper>

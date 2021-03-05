@@ -25,8 +25,8 @@ public class CommentsServiceImpl implements CommentsService {
 	}
 
 	@Override
-	public void deleteComments(CommentsVO vo) {
-		dao.deleteComments(vo);
+	public int deleteComments(CommentsVO vo) {
+		return dao.deleteComments(vo);
 	}
 
 	@Override

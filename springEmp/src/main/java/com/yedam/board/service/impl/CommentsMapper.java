@@ -2,8 +2,6 @@ package com.yedam.board.service.impl;
 
 import java.util.List;
 
-import org.springframework.stereotype.Repository;
-
 import com.yedam.board.service.CommentsVO;
 
 public interface CommentsMapper {
@@ -14,7 +12,7 @@ public interface CommentsMapper {
 	public void updateComments(CommentsVO vo);
 
 	// 삭제
-	public void deleteComments(CommentsVO vo);
+	public int deleteComments(CommentsVO vo);
 
 	// 단건조회
 	public CommentsVO getComments(CommentsVO vo);

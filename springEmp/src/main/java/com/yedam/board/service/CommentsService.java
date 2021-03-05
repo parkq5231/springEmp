@@ -10,7 +10,7 @@ public interface CommentsService {
 	public void updateComments(CommentsVO vo);
 
 	// 삭제
-	public void deleteComments(CommentsVO vo);
+	public int deleteComments(CommentsVO vo);
 
 	// 단건조회
 	public CommentsVO getComments(CommentsVO vo);
