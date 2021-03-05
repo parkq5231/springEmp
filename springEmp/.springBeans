@@ -14,6 +14,7 @@
 		<config>src/main/resources/mappings/dept_mapper.xml</config>
 		<config>src/main/resources/config/transaction-context.xml</config>
 		<config>src/main/resources/mappings/job_mapper.xml</config>
+		<config>src/main/resources/mappings/comment_mapper.xml</config>
 	</configs>
 	<autoconfigs>
 	</autoconfigs>
