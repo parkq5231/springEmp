@@ -38,7 +38,21 @@
 	function userDelete() {
 		//삭제 버튼 클릭
 		$('body').on('click','#btnDelete',function(){
-
+			var userId = $(this).closest('tr').find('#hidden_userId').val();
+			var result = confirm(userId +" 사용자를 정말로 삭제하시겠습니까?");
+			if(result) {
+				$.ajax({
+					url:'user/'+userId,  
+					type:'DELETE',
+					contentType:'application/json;charset=utf-8',
+					dataType:'json',
+					error:function(xhr,status,msg){
+						console.log("상태값 :" + status + " Http에러메시지 :"+msg);
+					}, success:function(xhr) {
+						console.log(xhr.result);
+						userList();
+					}
+				});      }//if
 		}); //삭제 버튼 클릭
 	}//userDelete
 	
@@ -46,7 +60,18 @@
 	function userSelect() {
 		//조회 버튼 클릭
 		$('body').on('click','#btnSelect',function(){
-
+			var userId = $(this).closest('tr').find('#hidden_userId').val();
+			//특정 사용자 조회
+			$.ajax({
+				url:'user/'+userId,
+				type:'GET',
+				contentType:'application/json;charset=utf-8',
+				dataType:'json',
+				error:function(xhr,status,msg){
+					alert("상태값 :" + status + " Http에러메시지 :"+msg);
+				},
+				success:userSelectResult
+			});
 		}); //조회 버튼 클릭
 	}//userSelect
 	
@@ -62,7 +87,23 @@
 	function userUpdate() {
 		//수정 버튼 클릭
 		$('#btnUpdate').on('click',function(){
-			
+			var id = $('input:text[name="id"]').val();
+			var name = $('input:text[name="name"]').val();
+			var password = $('input:text[name="password"]').val();
+			var role = $('select[name="role"]').val();		
+			$.ajax({ 
+			    url: "user", 
+			    type: 'PUT', 
+			    dataType: 'json', 
+			    data: JSON.stringify({ id: id, name:name,password: password, role: role }),
+			    contentType: 'application/json',
+			    success: function(data) { 
+			        userList();
+			    },
+			    error:function(xhr, status, message) { 
+			        alert(" status: "+status+" er:"+message);
+			    }
+			});
 		});//수정 버튼 클릭
 	}//userUpdate
 	
@@ -70,21 +111,27 @@
 	function userInsert(){
 		//등록 버튼 클릭
 		$('#btnInsert').on('click',function(){
-			/* var param = {id : $("[name=id]").val(),
-						 name : $("[name=name]").val() ,
-						 password : $("[name=password]").val(),
-						 role : $("[name=role]").val() }; */
-						 
- 			$.ajax({
-			 	url : "user",
-			 	method : "post",
-			 	data : JSON.stringify($("#form1").serializeObject()),
-			 	contentType : "application/json",		//보낼 데이터 json(json -> @RequestBody)
-			 	dataType : "json",						//응답 결과가 json(JSON.parse()와 같음)
-			 	success : function(response){
-			 		console.table(response);
-			 	}
- 			});//end of ajax
+			$("#form1")
+/* 			var id = $('input:text[name="id"]').val();
+			var name = $('input:text[name="name"]').val();
+			var passsword = $('input:text[name="password"]').val();
+			var role = $('select[name="role"]').val(); */		
+			$.ajax({ 
+			    url: "user",  
+			    type: 'POST',  
+			    dataType: 'json', 
+			    //data: JSON.stringify({ id: id, name:name,password: password, role: role }),
+			    data : JSON.stringify($("#form1").serializeObject()),
+			    contentType: 'application/json', 
+			    success: function(response) {
+			    	if(response.result == true) {
+			    		userList();
+			    	}
+			    }, 
+			    error:function(xhr, status, message) { 
+			        alert(" status: "+status+" er:"+message);
+			    } 
+			 });  
 		});//등록 버튼 클릭
 	}//userInsert
 	
@@ -93,6 +140,7 @@
 		$.ajax({
 			url:'user',
 			type:'GET',
+			//contentType:'application/json;charset=utf-8',
 			dataType:'json',
 			error:function(xhr,status,msg){
 				alert("상태값 :" + status + " Http에러메시지 :"+msg);
@@ -165,8 +213,8 @@
 		<tr>
 			<th class="text-center">아이디</th>
 			<th class="text-center">이름</th>
-			<th class="text-center">성별</th>
-			<th class="text-center">거주지</th>
+			<th class="text-center">패스워드</th>
+			<th class="text-center">권한</th>
 		</tr>
 		</thead>
 		<tbody></tbody>
