@@ -3,7 +3,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-<title>웹서비스 클라이언트(JSON)</title>
+<title>RESTful 웹서비스 클라이언트(JSON)</title>
 <!-- Optional theme -->
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
@@ -45,19 +45,19 @@
 			var userId = $(this).closest('tr').find('#hidden_userId').val();
 				//특정 사용자 조회
 				$.ajax({
-					url:'deleteUser',
-					data:{id:userId},
+					url:'user/'+userId,  
+					type:'DELETE',
 					dataType:'json',
 					error:function(xhr,status,msg){
 						console.log("상태값 :" + status + " Http에러메시지 :"+msg);
 					}, success:function(response) {
-						if(response.cnt ==1){
+						if(response.cnt >0){
 							tr.remove();
 						}else{
 							alert("삭제오류");
 							}
 						}
-					})
+					}
 		}); //삭제 버튼 클릭
 	}//userDelete
 	
@@ -68,10 +68,10 @@
 			var userId = $(this).closest('tr').find('#hidden_userId').val();
 			//특정 사용자 조회
 			$.ajax({
-				url:'getUser',
-				data: {id:userId},	//"id="+userId
-				//method:'GET',
-				dataType:'json',
+				url:'user/'+userId,
+				type:'GET',
+				//contentType:'application/json;charset=utf-8',
+				//dataType:'json',
 				error:function(xhr,status,msg){
 					alert("상태값 :" + status + " Http에러메시지 :"+msg);
 				},
@@ -94,9 +94,10 @@
 		$('#btnUpdate').on('click',function(){
 			
 			$.ajax({
-				url : "updateUser",
-				type : "POST",
-				data:  $("#form1").serializeObject(),
+				url : "user",
+				type : "PUT",
+				data:  JSON.stringify($("#form1").serializeObject()),
+				contentType : "application/json",
 				dataType : "json",
 				success: function(response){
 					//form field reset
@@ -121,11 +122,12 @@
 			var passsword = $('input:text[name="password"]').val();
 			var role = $('select[name="role"]').val(); */		
 			$.ajax({ 
-			    url: "insertUser",  
+			    url: "user",  
 			    type: 'POST',  
-			    //data: JSON.stringify({ id: id, name:name,password: password, role: role }),
-			    data :$("#form1").serialize(),
 			    dataType: 'json', 
+			    //data: JSON.stringify({ id: id, name:name,password: password, role: role }),
+			    data : JSON.stringify($("#form1").serializeObject()),
+			    contentType: 'application/json', 
 			    success: function(response) {
 			    	if(response.result == true) {
 			    		userList();
@@ -141,7 +143,7 @@
 	//사용자 목록 조회 요청
 	function userList() {
 		$.ajax({
-			url:'getUserList',
+			url:'user',
 			type:'GET',
 			//contentType:'application/json;charset=utf-8',
 			dataType:'json',

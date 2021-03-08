@@ -13,6 +13,7 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 
 public class EmpVO {
+	
 	private String employee_id;
 	private String first_name;
 	private String last_name;
@@ -22,7 +23,7 @@ public class EmpVO {
 	private String job_id;
 	private String salary;
 	private String commission_pct;
-	private String manager_id;
+	private Integer manager_id;
 	private String department_id;
 	private String department_name;
 	private String job_title;

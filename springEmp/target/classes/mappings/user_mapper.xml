@@ -22,9 +22,9 @@
 			<if test="name != null and name !=''">
 				, NAME = #{name}
 			</if>
-			<if test="role != null and role != ''">
+			<!-- <if test="role != null and role != ''">
 				, ROLE = #{role}
-			</if>
+			</if> -->
 		</set>
 		WHERE ID = #{id}
 	</update>
