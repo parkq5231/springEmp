@@ -19,5 +19,4 @@
 		<typeAlias type="com.yedam.emp.UserVO" alias="UserVO" />
 		<package name="com.yedam" />
 	</typeAliases>
-
 </configuration>

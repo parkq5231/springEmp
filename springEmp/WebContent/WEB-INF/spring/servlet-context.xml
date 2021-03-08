@@ -13,12 +13,22 @@
 		<property name="suffix" value=".jsp" />
 	</bean>
 	<!-- component,controller,service,repository -->
-	<context:component-scan
-		base-package="com.yedam" />
+	<context:component-scan base-package="com.yedam" />
 	<!--@PostMapping, @ResponseBody ... -->
 	<mvc:annotation-driven />
 
 	<!-- 정적인 자원임을 의미 -->
 	<mvc:resources location="/resources/" mapping="/resources/**" />
+		
+	<bean id="loginInterceptor" class="com.yedam.emp.common.LoginInterceptor"/>
+		<!-- intercepter -->
+		<mvc:interceptors>
+			<mvc:interceptor>
+				<mvc:mapping path="/*" />
+				<mvc:exclude-mapping path="/login"/>
+				<mvc:exclude-mapping path="/"/>
+				<ref bean="loginInterceptor" />
+			</mvc:interceptor>
+		</mvc:interceptors>
 
 </beans>

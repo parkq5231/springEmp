@@ -23,7 +23,7 @@
 		FROM DEPARTMENTS d ,employees e, locations l
 		
 		<where>
-		e.department_id = d.department_id
+		e.employee_id = d.manager_id
 		AND d.location_id = l.location_id
 			<if test="department_name != null and department_name != ''">
 				AND d.DEPARTMENT_NAME = #{department_name}
@@ -32,8 +32,7 @@
 				AND l.city = #{city}
 			</if>
 			<if test="last_name != null and last_name != ''">
-				AND upper(e.last_name) LIKE '%' || upper(#{last_name}) ||
-				'%'
+				AND upper(e.last_name) LIKE '%' || upper(#{last_name}) || '%'
 			</if>
 		</where>
 		ORDER BY d.DEPARTMENT_ID
@@ -47,7 +46,7 @@
 		LOCATIONS l FULL OUTER JOIN departments d
 		ON(l.LOCATION_ID = d.LOCATION_ID)
 		FULL OUTER JOIN EMPLOYEES e
-		ON(d.MANAGER_ID = e.MANAGER_ID)
+		ON(d.MANAGER_ID = e.employee_id)
 		WHERE d.DEPARTMENT_ID =	#{department_id}
 	</select>
 

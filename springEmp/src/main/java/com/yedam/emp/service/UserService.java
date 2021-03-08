@@ -19,4 +19,11 @@ public interface UserService {
 
 	// 전체조회
 	public List<UserVO> getSearchUser(UserVO vo);
+
+	// 로그인
+	// int bool 가능
+	public boolean logCheck(UserVO vo);
+
+	// 패스워드 변경
+	public int updatePw(UserVO vo);
 }

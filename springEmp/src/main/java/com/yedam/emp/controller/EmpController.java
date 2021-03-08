@@ -1,8 +1,11 @@
 package com.yedam.emp.controller;
 
+import javax.validation.Valid;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -37,7 +40,7 @@ public class EmpController {
 	public String insertEmp(EmpVO vo, Model model, DeptSearchVO deptvo, JobVO jobvo) {// vo 를 사용하지 않아도 인수 써줘야함
 		deptvo.setStart(1);
 		deptvo.setEnd(1000);
-		
+
 		model.addAttribute("deptList", deptService.getSearchDept(deptvo));
 		model.addAttribute("jobList", jobService.getSearchJob(jobvo));
 		return "/emp/insertEmp";
@@ -45,9 +48,19 @@ public class EmpController {
 
 	// 등록처리
 	@PostMapping("/insertEmp")
-	public String insertEmpProc(EmpVO vo) {
-		empService.insertEmp(vo);
-		return "redirect:getSearchEmp";
+	public String insertEmpProc(@Valid EmpVO vo, BindingResult result, DeptSearchVO deptvo, JobVO jobvo, Model model) {
+		// 입력값 검증
+		// EmpValidation empValidation = new EmpValidation();
+		// empValidation.validate(vo, result);
+
+		if (result.hasErrors()) {// 에러가 1개라도 있으면(result:boolean)
+			model.addAttribute("deptList", deptService.getSearchDept(deptvo));
+			model.addAttribute("jobList", jobService.getSearchJob(jobvo));
+			return "/emp/insertEmp"; // 다시 등록 페이지로
+		} else {
+			empService.insertEmp(vo);
+			return "redirect:getSearchEmp";
+		}
 	}
 
 	// 수정페이지
