@@ -18,15 +18,15 @@ td {
 			<table id="tbl">
 				<tr>
 					<td>현재 패스워드 :</td>
-					<td><input type="password" name="password"></td>
+					<td><input type="password" name="oldpassword"></td>
 				</tr>
 				<tr>
 					<td>변경할 패스워드 :</td>
-					<td><input type="password" name="newpassword"></td>
+					<td><input type="password" name="password"></td>
 				</tr>
 				<tr>
 					<td>변경할 패스워드 확인 :</td>
-					<td><input type="password" name="newpassword2"></td>
+					<td><input type="password" name="newpassword"></td>
 				</tr>
 			</table>
 			<br>

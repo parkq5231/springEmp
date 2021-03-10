@@ -7,12 +7,12 @@ import lombok.Data;
 @Data
 public class UserVO {
 	private String id;
-	@NotNull
-	private String password;
 	private String name;
 	private String role;
 	@NotNull
-	private String newpassword;
+	private String oldpassword;
 	@NotNull
-	private String newpassword2;
+	private String password;
+	@NotNull
+	private String newpassword;
 }

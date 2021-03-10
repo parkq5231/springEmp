@@ -60,7 +60,7 @@ public class UserServiceImpl implements UserService {
 		// 단건조회
 		UserVO uservo = dao.getUser(vo);
 		// 기존패스워드와 일치하는지 채크
-		if (uservo.getPassword().equals(vo.getPassword())) {
+		if (uservo.getPassword().equals(vo.getOldpassword())) {
 			// 일치한다면 패스워드 업데이트
 			dao.updateUser(vo);
 			return 1;

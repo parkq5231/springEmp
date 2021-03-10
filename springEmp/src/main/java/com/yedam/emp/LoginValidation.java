@@ -14,8 +14,8 @@ public class LoginValidation implements Validator {
 	@Override
 	public void validate(Object target, Errors errors) {
 		UserVO vo = (UserVO) target;
-		if(vo.getNewpassword().equals(vo.getNewpassword2())) {
-			
+		if (!vo.getPassword().equals(vo.getNewpassword())) {
+			errors.reject("error");;
 		}
 	}
 }

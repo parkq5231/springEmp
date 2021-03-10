@@ -29,13 +29,15 @@ public class LoginController {
 	@PostMapping("/changePw")
 	public String changePwProc(@Valid UserVO vo, BindingResult result, HttpSession session) {
 		// validation(pw 일치여부 확인)
-		LoginValidation logval = new LoginValidation();
-		logval.validate(vo, result);
 
 		/*
-		 * if (!vo.getNewpassword().equals(vo.getNewpassword2())) { return
-		 * "user/changePw"; }
+		 * LoginValidation logval = new LoginValidation(); logval.validate(vo, result);
 		 */
+
+		if (!vo.getPassword().equals(vo.getNewpassword())) {
+			return "user/changePw";
+		}
+
 		// 패스워드 변경 서비스
 		String id = (String) session.getAttribute("loginid");
 		vo.setId(id);
