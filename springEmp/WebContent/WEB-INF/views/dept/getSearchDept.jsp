@@ -25,8 +25,7 @@ img:hover {
 		<img src="./resources/images/Lighthouse.jpg">
 		<p>
 			<a href="getDept?department_id=${dept.department_id}">${dept.department_name}</a>
-			이름: ${dept.last_name} 매니저: ${dept.manager_id} 지역번호:
-			${dept.location_id} 도시: ${dept.city}
+			이름: ${dept.last_name} 매니저: ${dept.manager_id} 지역번호: ${dept.location_id} 도시: ${dept.city}
 			<button style="float: right" type="button" class="btnSelect">선택</button>
 		</p>
 	</c:forEach>

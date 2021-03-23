@@ -66,12 +66,12 @@ public class DeptController {
 		paging.setPageSize(3);// 페이지 갯수가 3개라는 의미
 		// paging
 		if (paging.getPage() == null)
-			paging.setPage(1);
-		deptvo.setStart(paging.getFirst());
-		deptvo.setEnd(paging.getLast());
-		paging.setTotalRecord(deptService.getCount(deptvo));
+			paging.setPage(1);// jsp페이지에서 page값을 넘겨주는게 null일 때 초기값을 1로 주겠다는 의미
+		deptvo.setStart(paging.getFirst());// 위의 설정 값을 deptvo의 start에 담음
+		deptvo.setEnd(paging.getLast());// 위의 설정 값을 deptvo의 end에 담음
+		paging.setTotalRecord(deptService.getCount(deptvo));// 전체 레코드 값을 getCount메소드를 사용하여 정한다는 의미
 
-		model.addAttribute("paging", paging);
+		model.addAttribute("paging", paging);// model에 paging보냄
 		model.addAttribute("deptList", deptService.getSearchDept(deptvo));
 		return "dept/getSearchDept";
 	}
