@@ -61,7 +61,7 @@ public class EmpMapperClient {
 
 	// @Test
 	public void getSearchEmp() {
-		EmpVO vo = EmpVO.builder()//
+		EmpSearchVO vo = (EmpSearchVO) EmpVO.builder()//
 				.employee_id("100")//
 				.build();
 		List<EmpVO> list = empMapper.getSearchEmp(vo);
